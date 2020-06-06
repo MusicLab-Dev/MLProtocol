@@ -12,5 +12,5 @@ add_executable(${CMAKE_PROJECT_NAME} ${MLProtocolBenchmarksSources})
 target_link_libraries(${CMAKE_PROJECT_NAME}
 PUBLIC
     MLProtocolLib
-    benchmark
+    benchmark::benchmark
 )
