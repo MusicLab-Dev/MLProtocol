@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace Protocol
 {
     /** @brief Distance with the studio */
