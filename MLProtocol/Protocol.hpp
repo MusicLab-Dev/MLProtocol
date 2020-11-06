@@ -37,4 +37,12 @@ namespace Protocol
         std::uint8_t value2 { 0u };
         std::uint8_t value3 { 0u };
     };
+
+    #pragma pack(push, 1)
+    struct DiscoveryPacket
+    {
+        ConnectionType link_type;
+        NodeDistance distance;
+    };
+    #pragma pack(pop)
 };
