@@ -41,7 +41,7 @@ namespace Protocol
     #pragma pack(push, 1)
     struct DiscoveryPacket
     {
-        ConnectionType link_type;
+        ConnectionType conn_type;
         NodeDistance distance;
     };
     #pragma pack(pop)
