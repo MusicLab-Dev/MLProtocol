@@ -38,11 +38,17 @@ namespace Protocol
         std::uint8_t value3 { 0u };
     };
 
-    #pragma pack(push, 1)
-    struct DiscoveryPacket
+    /** @brief Discovery packet magic key */
+    constexpr std::uint32_t DiscoveryPacketMagicKey = 0xD15C0FFF;
+
+    /** @brief Discovery packet */
+    struct alignas(1) DiscoveryPacket
     {
-        ConnectionType conn_type;
-        NodeDistance distance;
+        std::uint32_t magicKey { DiscoveryPacketMagicKey };
+        ConnectionType connectionType { ConnectionType::None };
+        NodeDistance distance { 0u };
     };
-    #pragma pack(pop)
+
+    // static_assert(sizeof(DiscoveryPacket) == 6, "DiscoveryPacket must takes 6 bytes");
+    // TO FIX
 };
