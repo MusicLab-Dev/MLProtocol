@@ -13,7 +13,7 @@ namespace Protocol
     using NodeDistance = std::uint8_t;
 
     /** @brief Distance between two nodes */
-    using BoardID = std::uint32_t;
+    using BoardID = std::uint16_t;
 
     /** @brief Hardware connection type */
     enum class ConnectionType : std::uint8_t {
