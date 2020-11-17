@@ -38,17 +38,48 @@ namespace Protocol
         std::uint8_t value3 { 0u };
     };
 
-    /** @brief Discovery packet magic key */
-    constexpr std::uint32_t DiscoveryPacketMagicKey = 0xD15C0FFF;
+    using MagicKey = std::uint32_t;
+    using Payload = std::uint16_t;
+
+    enum class PacketID : std::uint8_t {
+        None,
+        IDResquest,
+        IDAssignment
+    };
+
+    /** @brief MusicLabMagicKey network packets magic key */
+    constexpr MagicKey MusicLabMagicKey = 420;
 
     /** @brief Discovery packet */
-    struct alignas(1) DiscoveryPacket
+    struct DiscoveryPacket
     {
-        std::uint32_t magicKey { DiscoveryPacketMagicKey };
+        MagicKey magicKey { MusicLabMagicKey };
+        BoardID boardID { 0u };
         ConnectionType connectionType { ConnectionType::None };
         NodeDistance distance { 0u };
     };
 
-    // static_assert(sizeof(DiscoveryPacket) == 6, "DiscoveryPacket must takes 6 bytes");
-    // TO FIX
+    struct PacketHeader
+    {
+        MagicKey magicKey { MusicLabMagicKey };
+        PacketID packetID { PacketID::None };
+        Payload payload { 0u };
+    };
+
+    class Packet
+    {
+    public:
+        Packet(void) noexcept = default;
+        Packet(PacketID id) noexcept { _header.packetID = id; };
+
+        ~Packet(void) = default;
+
+        void setPayload(std::size_t payload) noexcept { _header.payload = payload; }
+        [[nodiscard]] std::uint8_t *data(void) noexcept { return reinterpret_cast<std::uint8_t *>(&_data); }
+        [[nodiscard]] std::size_t size(void) const noexcept { return sizeof(PacketHeader) + _header.payload; }
+
+    private:
+        PacketHeader _header;
+        std::uint8_t _data[256];
+    };
 };
